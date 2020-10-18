@@ -37,6 +37,8 @@ ext {
     compileSdkVersion = 29
 
     appCompatVersion = '1.2.0'
+    materialVersion = '1.2.1'
+    loggingInterceptorVersion = '4.9.0'
     constraintLayoutVersion = '2.0.2'
     espressoVersion = '3.2.0'
     glideVersion = '4.11.0'
