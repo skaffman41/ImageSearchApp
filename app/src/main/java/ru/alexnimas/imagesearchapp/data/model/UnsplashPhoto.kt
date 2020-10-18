@@ -6,18 +6,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class UnsplashPhoto(
-    var id: String?,
-    @SerializedName("created_at") var createdAt: String?,
-    var width: Int?,
-    var height: Int?,
-    var color: String?,
-    @SerializedName("blur_hash") var blurHash: String?,
-    var likes: Int?,
-    @SerializedName("liked_by_user") var likedByUser: Boolean?,
-    var description: String?,
-    var user: User?,
-    var urls: Urls?,
-    var links: Links?
+    val id: String?,
+    @SerializedName("created_at") val createdAt: String?,
+    val width: Int?,
+    val height: Int?,
+    val color: String?,
+    @SerializedName("blur_hash") val blurHash: String?,
+    val likes: Int?,
+    @SerializedName("liked_by_user") val likedByUser: Boolean?,
+    val description: String?,
+    val user: User?,
+    val urls: Urls?,
+    val links: Links?
 ) : Parcelable {
 
     @Parcelize
@@ -25,44 +25,44 @@ data class UnsplashPhoto(
         var id: String?,
         var username: String?,
         var name: String?,
-        @SerializedName("first_name") var firstName: String?,
-        @SerializedName("last_name") var lastName: String?,
-        @SerializedName("instagram_username") var instagramUsername: String?,
-        @SerializedName("twitter_username") var twitterUsername: String?,
-        @SerializedName("portfolio_url") var portfolioUrl: String?,
-        @SerializedName("profile_image") var profileImage: ProfileImage?,
+        @SerializedName("first_name") val firstName: String?,
+        @SerializedName("last_name") val lastName: String?,
+        @SerializedName("instagram_username") val instagramUsername: String?,
+        @SerializedName("twitter_username") val twitterUsername: String?,
+        @SerializedName("portfolio_url") val portfolioUrl: String?,
+        @SerializedName("profile_image") val profileImage: ProfileImage?,
         var links: UserLinks?
     ) : Parcelable {
 
         @Parcelize
         data class ProfileImage(
-            var small: String?,
-            var medium: String?,
-            var large: String?
+            val small: String?,
+            val medium: String?,
+            val large: String?
         ) : Parcelable
 
         @Parcelize
         data class UserLinks(
-            var self: String?,
-            var html: String?,
-            var photos: String?,
-            var likes: String?
+            val self: String?,
+            val html: String?,
+            val photos: String?,
+            val likes: String?
         ) : Parcelable
     }
 
     @Parcelize
     data class Urls(
-        var raw: String?,
-        var full: String?,
-        var regular: String?,
-        var small: String?,
-        var thumb: String?
+        val raw: String?,
+        val full: String?,
+        val regular: String?,
+        val small: String?,
+        val thumb: String?
     ) : Parcelable
 
     @Parcelize
     data class Links(
-        var self: String?,
-        var html: String?,
-        var download: String?
+        val self: String?,
+        val html: String?,
+        val download: String?
     ) : Parcelable
 }
