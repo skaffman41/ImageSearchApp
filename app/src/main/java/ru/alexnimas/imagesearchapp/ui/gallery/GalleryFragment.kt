@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import ru.alexnimas.imagesearchapp.R
 import ru.alexnimas.imagesearchapp.data.adapters.UnsplashPhotoAdapter
+import ru.alexnimas.imagesearchapp.data.adapters.UnsplashPhotoLoadStateAdapter
 import ru.alexnimas.imagesearchapp.databinding.FragmentGalleryBinding
 
 @AndroidEntryPoint
@@ -25,7 +26,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         binding?.apply {
             rvGallery.setHasFixedSize(true)
-            rvGallery.adapter = adapter
+            rvGallery.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = UnsplashPhotoLoadStateAdapter { adapter.retry() },
+                footer = UnsplashPhotoLoadStateAdapter { adapter.retry() }
+            )
         }
 
         viewModel.photos.observe(viewLifecycleOwner) { data ->
