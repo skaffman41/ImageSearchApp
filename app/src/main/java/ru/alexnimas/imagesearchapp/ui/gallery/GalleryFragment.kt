@@ -5,8 +5,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import ru.alexnimas.imagesearchapp.R
 import ru.alexnimas.imagesearchapp.data.adapters.UnsplashPhotoAdapter
@@ -29,14 +31,37 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         binding?.apply {
             rvGallery.setHasFixedSize(true)
+            rvGallery.itemAnimator = null
             rvGallery.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = UnsplashPhotoLoadStateAdapter { adapter.retry() },
                 footer = UnsplashPhotoLoadStateAdapter { adapter.retry() }
             )
+            btnRetry.setOnClickListener {
+                adapter.retry()
+            }
         }
 
         viewModel.photos.observe(viewLifecycleOwner) { data ->
             adapter.submitData(viewLifecycleOwner.lifecycle, data)
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            binding?.apply {
+                pbGallery.isVisible = loadState.source.refresh is LoadState.Loading
+                rvGallery.isVisible = loadState.source.refresh is LoadState.NotLoading
+                btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+                tvError.isVisible = loadState.source.refresh is LoadState.Error
+
+                if (loadState.source.refresh is LoadState.NotLoading &&
+                    loadState.append.endOfPaginationReached &&
+                    adapter.itemCount < 1
+                ) {
+                    rvGallery.isVisible = false
+                    tvEmpty.isVisible = true
+                } else {
+                    tvEmpty.isVisible = false
+                }
+            }
         }
 
         setHasOptionsMenu(true)
